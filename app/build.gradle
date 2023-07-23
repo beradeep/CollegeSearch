@@ -25,6 +25,7 @@ android {
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
         buildConfigField "String", "API_KEY_QUOTES", "\"${properties.getProperty("API_KEY_QUOTES")}\""
+        buildConfigField "String", "API_KEY_CUTOFF", "\"${properties.getProperty("API_KEY_CUTOFF")}\""
     }
 
     buildTypes {
