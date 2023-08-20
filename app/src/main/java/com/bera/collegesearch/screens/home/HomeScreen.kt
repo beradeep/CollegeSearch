@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
@@ -211,8 +212,12 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
             contentPadding = PaddingValues(10.dp)
         ) {
             items(4, key = { categoryArr[it] }) {
-                ElevatedButton(
+                Button(
                     onClick = { navController.navigate(Routes.CollegeScreen.route + "/" + categoryArr[it]) },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                    ),
                     shape = RoundedCornerShape(12.dp),
                     elevation = ButtonDefaults.buttonElevation(2.dp),
                     contentPadding = PaddingValues(
