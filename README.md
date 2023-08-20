@@ -1,11 +1,18 @@
 
 # CollegeSearch
 
-CollegeSearch is a simple and powerful tool for filtering out the best colleges in India for you.
+### CollegeSearch is a simple and powerful tool for filtering out the best colleges in India for you.
+#### You just enter your JEE SCORE/RANK and boom, you get all the recommended colleges you can get into.
 
 Currently available on the Play Store.
 
 <a href='https://play.google.com/store/apps/details?id=com.bera.collegesearch'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height='80px'/></a>
+
+## Features
+- [x] Free to use, no login, no sign up required.
+- [x] All kinds of filters, sorts to play with and decide your ideal college.
+- [x] Takes into consideration, all the criteria & resevations- rank, sex, caste etc.
+- [x] Get cutoffs for any branch in any IIT, NIT or GFTI individually.
 
 ## Installation
 
@@ -25,5 +32,6 @@ Install from the [Play Store](https://play.google.com/store/apps/details?id=com.
 
 ## Contributing
 
-Contributions are always welcome. Thanks to all the future contributors!
+Contributions are always welcome. Feel free to make a pull request. Thanks to all the future contributors!
 
+Higly appreciate leaving a :star: if you liked it!
