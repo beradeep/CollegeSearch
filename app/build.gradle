@@ -7,14 +7,14 @@ plugins {
 
 android {
     namespace 'com.bera.collegesearch'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.bera.collegesearch"
         minSdk 24
-        targetSdk 33
-        versionCode 6
-        versionName "1.5"
+        targetSdk 34
+        versionCode 7
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
