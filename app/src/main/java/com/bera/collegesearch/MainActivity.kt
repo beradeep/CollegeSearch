@@ -13,8 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.bera.collegesearch.navigation.Navigation
-import com.bera.collegesearch.network.ConnectivityObserver
-import com.bera.collegesearch.network.ConnectivityStatus
+import com.bera.collegesearch.network.connectivity.ConnectivityObserver
+import com.bera.collegesearch.network.connectivity.ConnectivityStatus
 import com.bera.collegesearch.screens.home.NetworkErrorScreen
 import com.bera.collegesearch.ui.theme.CollegeSearchTheme
 import dagger.hilt.android.AndroidEntryPoint

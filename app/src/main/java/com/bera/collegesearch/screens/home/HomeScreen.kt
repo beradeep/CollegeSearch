@@ -25,10 +25,11 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +42,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,6 +52,7 @@ import androidx.navigation.NavController
 import com.bera.collegesearch.navigation.Routes
 import com.bera.collegesearch.ui.theme.CollegeSearchTheme
 import com.bera.collegesearch.utils.CustomOutlinedCard
+import com.bera.collegesearch.utils.ShimmerListItem
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -64,7 +67,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
             TopHalf(
                 modifier = Modifier
                     .weight(10f)
-                    .padding(6.dp),
+                    .padding(start = 6.dp, end = 6.dp, top = 6.dp, bottom = 10.dp),
                 navController,
                 viewModel.slideImage,
                 viewModel.pagerState,
@@ -82,7 +85,8 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                     .weight(3f)
                     .padding(horizontal = 20.dp, vertical = 10.dp),
                 viewModel.quote,
-                viewModel.author
+                viewModel.author,
+                viewModel.isQuoteLoading
             )
             Text(
                 text = "Made with ♥ by BERA",
@@ -97,32 +101,45 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
 }
 
 @Composable
-fun QuoteBox(modifier: Modifier, quote: String, author: String) {
+fun QuoteBox(modifier: Modifier, quote: String, author: String, isLoading: Boolean) {
     LazyColumn(modifier = modifier) {
         item {
-            Text(
-                text = "Quote of the day: ",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Justify,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(6.dp)
-            )
-            Text(
-                text = "\" $quote \"",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Justify,
-                fontStyle = FontStyle.Italic
-            )
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(2.dp)
-            )
-            Text(text = "- $author", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.End)
+            ElevatedCard {
+                ShimmerListItem(
+                    modifier = Modifier.fillMaxSize().padding(10.dp),
+                    isLoading = isLoading,
+                    barCount = 2
+                ) {
+                    Text(
+                        text = "Quote of the day: ",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Justify,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(6.dp)
+                    )
+                    Text(
+                        text = "\" $quote \"",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Justify,
+                        fontStyle = FontStyle.Italic
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(2.dp)
+                    )
+                    Text(
+                        text = "- $author",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
         }
     }
 }
@@ -153,31 +170,29 @@ fun TopHalf(
             )
         }
 
-        IconButton(
+        FilledTonalIconButton(
             onClick = { scope.launch { changeImage(false) } },
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowLeft,
                 contentDescription = "Previous Image",
-                modifier = modifier.size(40.dp),
-                tint = MaterialTheme.colorScheme.primary
+                modifier = modifier.size(24.dp),
             )
         }
 
-        IconButton(
+        FilledTonalIconButton(
             onClick = { scope.launch { changeImage(true) } },
-            modifier = Modifier.align(Alignment.CenterEnd)
+            modifier = Modifier.align(Alignment.CenterEnd),
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowRight,
                 contentDescription = "Next Image",
-                modifier = modifier.size(40.dp),
-                MaterialTheme.colorScheme.primary
+                modifier = modifier.size(24.dp),
             )
         }
 
-        ElevatedButton(
+        Button(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .offset(y = (-40).dp),
@@ -204,7 +219,7 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
 
     val categoryArr = arrayOf("iit", "nit", "iiit", "ogc")
 
-    CustomOutlinedCard(modifier = modifier, label = "JoSAA Cutoffs") {
+    CustomOutlinedCard(modifier = modifier, label = " Cutoffs ") {
         LazyVerticalGrid(
             columns = GridCells.Fixed(count = 2),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -212,11 +227,11 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
             contentPadding = PaddingValues(10.dp)
         ) {
             items(4, key = { categoryArr[it] }) {
-                Button(
+                OutlinedButton(
                     onClick = { navController.navigate(Routes.CollegeScreen.route + "/" + categoryArr[it]) },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     ),
                     shape = RoundedCornerShape(12.dp),
                     elevation = ButtonDefaults.buttonElevation(2.dp),

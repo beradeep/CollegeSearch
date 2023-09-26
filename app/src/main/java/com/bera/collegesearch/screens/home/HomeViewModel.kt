@@ -53,6 +53,8 @@ class HomeViewModel @Inject constructor(
 
     var quote by mutableStateOf("")
     var author by mutableStateOf("")
+    var isQuoteLoading by mutableStateOf(false)
+        private set
 
     init {
         getQuotes()
@@ -62,11 +64,12 @@ class HomeViewModel @Inject constructor(
         getQuotesUseCase(category = "education").onEach { resource ->
             when (resource) {
                 is Resource.Loading -> {
-                    quote = "The quote of the day is loading.."
+                    isQuoteLoading = true
                     Log.d("loading", "loading")
                 }
 
                 is Resource.Error -> {
+                    quote = "Oops! Unable to load.."
                     Log.d("error", "error")
                 }
 

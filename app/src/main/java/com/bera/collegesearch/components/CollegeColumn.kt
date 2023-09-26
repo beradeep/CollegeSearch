@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,7 +54,7 @@ fun CollegeColumn(
                     modifier = Modifier
                         .fillMaxWidth().padding(top = 16.dp, start = 4.dp, end = 4.dp)
                 ) {
-                    Button(
+                    OutlinedButton(
                         modifier = Modifier
                             .height(80.dp)
                             .fillMaxWidth()

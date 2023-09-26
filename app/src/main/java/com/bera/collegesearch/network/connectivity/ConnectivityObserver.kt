@@ -1,4 +1,4 @@
-package com.bera.collegesearch.network
+package com.bera.collegesearch.network.connectivity
 
 import android.content.Context
 import android.net.ConnectivityManager

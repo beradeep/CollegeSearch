@@ -88,7 +88,7 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                             )
                             val rotationState by animateFloatAsState(
                                 targetValue = if (state.expandFilters) 270f else 0f,
-                                animationSpec = tween(durationMillis = 300)
+                                animationSpec = tween(durationMillis = 300), label = ""
                             )
                             Icon(
                                 imageVector = Icons.Default.Settings,
@@ -175,14 +175,20 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                         ) {
                                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                                 RadioButton(selected = state.exam == "Adv",
-                                                    enabled = state.exam != "Adv",
-                                                    onClick = { onAction(CBRAction.Exam("Adv")) })
+                                                    onClick = {
+                                                        if (state.exam != "Adv") onAction(
+                                                            CBRAction.Exam("Adv")
+                                                        )
+                                                    })
                                                 Text(text = "JEE-Adv", fontSize = 10.sp)
                                             }
                                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                                 RadioButton(selected = state.exam == "Main",
-                                                    enabled = state.exam != "Main",
-                                                    onClick = { onAction(CBRAction.Exam("Main")) })
+                                                    onClick = {
+                                                        if (state.exam != "Main") onAction(
+                                                            CBRAction.Exam("Main")
+                                                        )
+                                                    })
                                                 Text(text = "JEE-Main", fontSize = 10.sp)
                                             }
                                         }
@@ -203,14 +209,20 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                         ) {
                                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                                 RadioButton(selected = state.state == "HS",
-                                                    enabled = state.state != "HS",
-                                                    onClick = { onAction(CBRAction.State("HS")) })
+                                                    onClick = {
+                                                        if (state.state != "HS") onAction(
+                                                            CBRAction.State("HS")
+                                                        )
+                                                    })
                                                 Text(text = "HS", fontSize = 10.sp)
                                             }
                                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                                 RadioButton(selected = state.state == "OS",
-                                                    enabled = state.state != "OS",
-                                                    onClick = { onAction(CBRAction.State("OS")) })
+                                                    onClick = {
+                                                        if (state.state != "OS") onAction(
+                                                            CBRAction.State("OS")
+                                                        )
+                                                    })
                                                 Text(text = "OS", fontSize = 10.sp)
                                             }
                                         }
@@ -231,20 +243,29 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                     ) {
                                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                             RadioButton(selected = state.gender == "Gender-Neutral",
-                                                enabled = state.gender != "Gender-Neutral",
-                                                onClick = { onAction(CBRAction.Gender("Gender-Neutral")) })
+                                                onClick = {
+                                                    if (state.gender != "Gender-Neutral") onAction(
+                                                        CBRAction.Gender("Gender-Neutral")
+                                                    )
+                                                })
                                             Text(text = "Gender-Neutral", fontSize = 10.sp)
                                         }
                                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                             RadioButton(selected = state.gender == "Female",
-                                                enabled = state.gender != "Female",
-                                                onClick = { onAction(CBRAction.Gender("Female")) })
+                                                onClick = {
+                                                    if (state.gender != "Female") onAction(
+                                                        CBRAction.Gender("Female")
+                                                    )
+                                                })
                                             Text(text = "Female", fontSize = 10.sp)
                                         }
                                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                             RadioButton(selected = state.gender == "Supernumerary",
-                                                enabled = state.gender != "Supernumerary",
-                                                onClick = { onAction(CBRAction.Gender("Supernumerary")) })
+                                                onClick = {
+                                                    if (state.gender != "Supernumerary") onAction(
+                                                        CBRAction.Gender("Supernumerary")
+                                                    )
+                                                })
                                             Text(text = "Other", fontSize = 10.sp)
                                         }
                                     }
@@ -264,14 +285,24 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                         ) {
                                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                                 RadioButton(selected = state.pwd,
-                                                    enabled = !state.pwd,
-                                                    onClick = { onAction(CBRAction.PwD(true)) })
+                                                    onClick = {
+                                                        if (!state.pwd) onAction(
+                                                            CBRAction.PwD(
+                                                                true
+                                                            )
+                                                        )
+                                                    })
                                                 Text(text = "Yes", fontSize = 10.sp)
                                             }
                                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                                 RadioButton(selected = !state.pwd,
-                                                    enabled = state.pwd,
-                                                    onClick = { onAction(CBRAction.PwD(false)) })
+                                                    onClick = {
+                                                        if (state.pwd) onAction(
+                                                            CBRAction.PwD(
+                                                                false
+                                                            )
+                                                        )
+                                                    })
                                                 Text(text = "No", fontSize = 10.sp)
                                             }
                                         }
@@ -290,32 +321,55 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                 ) {
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                         RadioButton(selected = state.quota == "OPEN",
-                                            enabled = state.quota != "OPEN",
-                                            onClick = { onAction(CBRAction.Quota("OPEN")) })
+                                            onClick = {
+                                                if (state.quota != "OPEN") onAction(
+                                                    CBRAction.Quota("OPEN")
+                                                )
+                                            })
                                         Text(text = "OPEN", fontSize = 10.sp)
                                     }
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                         RadioButton(selected = state.quota == "EWS",
-                                            enabled = state.quota != "EWS",
-                                            onClick = { onAction(CBRAction.Quota("EWS")) })
+                                            onClick = {
+                                                if (state.quota != "EWS") onAction(
+                                                    CBRAction.Quota(
+                                                        "EWS"
+                                                    )
+                                                )
+                                            })
                                         Text(text = "EWS", fontSize = 10.sp)
                                     }
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                         RadioButton(selected = state.quota == "SC",
-                                            enabled = state.quota != "SC",
-                                            onClick = { onAction(CBRAction.Quota("SC")) })
+                                            onClick = {
+                                                if (state.quota != "SC") onAction(
+                                                    CBRAction.Quota(
+                                                        "SC"
+                                                    )
+                                                )
+                                            })
                                         Text(text = "SC", fontSize = 10.sp)
                                     }
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                         RadioButton(selected = state.quota == "ST",
-                                            enabled = state.quota != "ST",
-                                            onClick = { onAction(CBRAction.Quota("ST")) })
+                                            onClick = {
+                                                if (state.quota != "ST") onAction(
+                                                    CBRAction.Quota(
+                                                        "ST"
+                                                    )
+                                                )
+                                            })
                                         Text(text = "ST", fontSize = 10.sp)
                                     }
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                         RadioButton(selected = state.quota == "OBC",
-                                            enabled = state.quota != "OBC",
-                                            onClick = { onAction(CBRAction.Quota("OBC")) })
+                                            onClick = {
+                                                if (state.quota != "OBC") onAction(
+                                                    CBRAction.Quota(
+                                                        "OBC"
+                                                    )
+                                                )
+                                            })
                                         Text(text = "OBC", fontSize = 10.sp)
                                     }
                                 }

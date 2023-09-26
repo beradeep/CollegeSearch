@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val LightColorScheme = lightColorScheme(
+private val _lightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
     primaryContainer = md_theme_light_primaryContainer,
@@ -47,7 +47,7 @@ private val LightColorScheme = lightColorScheme(
     scrim = md_theme_light_scrim,
 )
 
-private val DarkColorScheme = darkColorScheme(
+private val _darkColorScheme = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
     primaryContainer = md_theme_dark_primaryContainer,
@@ -91,16 +91,15 @@ fun CollegeSearchTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> _darkColorScheme
+        else -> _lightColorScheme
     }
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor =
-                if (darkTheme) DarkColorScheme.surface.toArgb() else LightColorScheme.surface.toArgb()
+                if (darkTheme) _darkColorScheme.surface.toArgb() else _lightColorScheme.surface.toArgb()
 
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
