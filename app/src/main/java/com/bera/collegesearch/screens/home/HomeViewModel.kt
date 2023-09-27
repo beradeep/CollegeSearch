@@ -2,6 +2,7 @@ package com.bera.collegesearch.screens.home
 
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,11 +23,6 @@ class HomeViewModel @Inject constructor(
     private val getQuotesUseCase: GetQuotesUseCase
 ) : ViewModel() {
 
-    val pagerState = PagerState(
-        initialPage = 0,
-        initialPageOffsetFraction = 0f,
-    )
-
     val drawableIds =
         arrayOf(
             R.drawable.iit_vector,
@@ -43,7 +39,7 @@ class HomeViewModel @Inject constructor(
             R.drawable.ogc
         )
 
-    suspend fun changeImagePage(next: Boolean) {
+    suspend fun changeImagePage(pagerState: PagerState, next: Boolean) {
         pagerState
             .animateScrollToPage(
                 if (next) pagerState.currentPage + 1
@@ -69,11 +65,13 @@ class HomeViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
+                    isQuoteLoading = false
                     quote = "Oops! Unable to load.."
                     Log.d("error", "error")
                 }
 
                 is Resource.Success -> {
+                    isQuoteLoading = false
                     quote = resource.data?.get(0)?.quote ?: ""
                     author = resource.data?.get(0)?.author ?: ""
                     Log.d("Success", "Success")

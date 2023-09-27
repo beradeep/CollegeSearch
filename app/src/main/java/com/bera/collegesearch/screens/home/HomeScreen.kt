@@ -1,5 +1,6 @@
 package com.bera.collegesearch.screens.home
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -38,27 +40,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.bera.collegesearch.R
+import com.bera.collegesearch.components.ThemeSwitcher
 import com.bera.collegesearch.navigation.Routes
-import com.bera.collegesearch.ui.theme.CollegeSearchTheme
 import com.bera.collegesearch.utils.CustomOutlinedCard
 import com.bera.collegesearch.utils.ShimmerListItem
 import kotlinx.coroutines.launch
+import kotlin.reflect.KSuspendFunction2
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltViewModel()) {
-
+fun HomeScreen(
+    navController: NavController,
+    viewModel: HomeViewModel = hiltViewModel(),
+    isDarkMode: Boolean,
+    onDarkModeToggle: () -> Unit
+) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -67,23 +73,24 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
             TopHalf(
                 modifier = Modifier
                     .weight(10f)
-                    .padding(start = 6.dp, end = 6.dp, top = 6.dp, bottom = 10.dp),
+                    .padding(6.dp),
                 navController,
                 viewModel.slideImage,
-                viewModel.pagerState,
-                viewModel::changeImagePage
+                viewModel::changeImagePage,
+                isDarkMode,
+                onDarkModeToggle
             )
             MainGrid(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
+                    .padding(horizontal = 10.dp, vertical = 6.dp),
                 navController,
                 viewModel.drawableIds
             )
             QuoteBox(
                 modifier = Modifier
                     .weight(3f)
-                    .padding(horizontal = 20.dp, vertical = 10.dp),
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
                 viewModel.quote,
                 viewModel.author,
                 viewModel.isQuoteLoading
@@ -104,40 +111,48 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
 fun QuoteBox(modifier: Modifier, quote: String, author: String, isLoading: Boolean) {
     LazyColumn(modifier = modifier) {
         item {
-            ElevatedCard {
+            ElevatedCard(Modifier.padding(2.dp)) {
                 ShimmerListItem(
-                    modifier = Modifier.fillMaxSize().padding(10.dp),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(10.dp),
                     isLoading = isLoading,
                     barCount = 2
                 ) {
-                    Text(
-                        text = "Quote of the day: ",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Justify,
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    Spacer(
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(6.dp)
-                    )
-                    Text(
-                        text = "\" $quote \"",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Justify,
-                        fontStyle = FontStyle.Italic
-                    )
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(2.dp)
-                    )
-                    Text(
-                        text = "- $author",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End,
-                        fontWeight = FontWeight.Bold
-                    )
+                            .fillMaxSize()
+                            .padding(10.dp)
+                    ) {
+                        Text(
+                            text = "Quote of the day: ",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Justify,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(6.dp)
+                        )
+                        Text(
+                            text = "\" $quote \"",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Justify,
+                            fontStyle = FontStyle.Italic
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(2.dp)
+                        )
+                        Text(
+                            text = "- $author",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.End,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
             }
         }
@@ -151,17 +166,24 @@ fun TopHalf(
     modifier: Modifier = Modifier,
     navController: NavController,
     slideImage: Array<Int>,
-    pagerState: PagerState,
-    changeImage: suspend (Boolean) -> Unit
+    changeImage: KSuspendFunction2<PagerState, Boolean, Unit>,
+    isDarkMode: Boolean,
+    onDarkModeToggle: () -> Unit
 ) {
 
     val scope = rememberCoroutineScope()
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        initialPageOffsetFraction = 0f
+    ) {
+        4
+    }
 
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
     ) {
-        HorizontalPager(state = pagerState, pageCount = 4, key = { slideImage[it] }) { index ->
+        HorizontalPager(state = pagerState, key = { slideImage[it] }) { index ->
             Image(
                 painter = painterResource(id = slideImage[index]),
                 contentDescription = "IIT Bombay",
@@ -171,7 +193,7 @@ fun TopHalf(
         }
 
         FilledTonalIconButton(
-            onClick = { scope.launch { changeImage(false) } },
+            onClick = { scope.launch { changeImage(pagerState, false) } },
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
             Icon(
@@ -182,7 +204,7 @@ fun TopHalf(
         }
 
         FilledTonalIconButton(
-            onClick = { scope.launch { changeImage(true) } },
+            onClick = { scope.launch { changeImage(pagerState, true) } },
             modifier = Modifier.align(Alignment.CenterEnd),
         ) {
             Icon(
@@ -202,6 +224,18 @@ fun TopHalf(
                 text = "Search for colleges by Rank",
                 fontSize = 14.sp,
                 fontFamily = FontFamily.Monospace
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(10.dp)
+        ) {
+            ThemeSwitcher(
+                darkTheme = isDarkMode,
+                onClick = onDarkModeToggle,
+                size = 50.dp
             )
         }
     }
@@ -247,8 +281,9 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        Image(
+                        Icon(
                             painter = painterResource(id = drawableIds[it]),
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
                             contentDescription = cardText[it],
                             modifier = Modifier
                                 .padding(4.dp)
@@ -269,10 +304,10 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun HomePreview() {
-    CollegeSearchTheme {
-        HomeScreen(navController = NavController(LocalContext.current))
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun HomePreview() {
+//    CollegeSearchTheme {
+//        HomeScreen(navController = NavController(LocalContext.current))
+//    }
+//}

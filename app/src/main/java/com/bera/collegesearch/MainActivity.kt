@@ -3,6 +3,7 @@ package com.bera.collegesearch
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
@@ -31,7 +32,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         connectivityObserver = ConnectivityObserver(applicationContext)
         setContent {
-            CollegeSearchTheme {
+
+            val systemDefault = isSystemInDarkTheme()
+            var isDarkMode by remember { mutableStateOf(systemDefault) }
+            CollegeSearchTheme(darkTheme = isDarkMode) {
 
                 val status by connectivityObserver.observe()
                     .collectAsState(initial = ConnectivityStatus.Unavailable)
@@ -39,7 +43,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     when(status) {
-                        ConnectivityStatus.Available -> Navigation()
+                        ConnectivityStatus.Available -> Navigation(isDarkMode) {
+                            isDarkMode = !isDarkMode
+                        }
+
                         else -> {
                             var showError by remember {
                                 mutableStateOf(false)

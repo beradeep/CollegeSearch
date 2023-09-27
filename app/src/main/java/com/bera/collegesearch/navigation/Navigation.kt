@@ -14,11 +14,15 @@ import com.bera.collegesearch.screens.home.HomeScreen
 
 
 @Composable
-fun Navigation() {
+fun Navigation(isDarkMode: Boolean, onDarkModeToggle: () -> Unit) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Routes.HomeScreen.route) {
         composable(Routes.HomeScreen.route) {
-            HomeScreen(navController = navController)
+            HomeScreen(
+                navController = navController,
+                isDarkMode = isDarkMode,
+                onDarkModeToggle = onDarkModeToggle
+            )
         }
         composable(Routes.CollegeScreen.route + "/{category}", listOf(navArgument("category") {
             type = NavType.StringType

@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bera.collegesearch.models.CutoffItem
+import com.bera.collegesearch.repository.CutoffRepository
 import com.bera.collegesearch.use_cases.GetCutoffsUseCase
 import com.bera.collegesearch.utils.Constants.IIT_STRING
 import com.bera.collegesearch.utils.Constants.IIT_STRING_1

@@ -3,8 +3,10 @@ package com.bera.collegesearch.use_cases
 import com.bera.collegesearch.models.CutoffItem
 import com.bera.collegesearch.repository.CutoffRepository
 import com.bera.collegesearch.utils.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class GetCutoffsUseCase @Inject constructor(
