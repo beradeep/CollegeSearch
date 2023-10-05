@@ -14,10 +14,12 @@ Currently available on the Play Store.
 <a href='https://play.google.com/store/apps/details?id=com.bera.collegesearch'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height='80px'/></a>
 
 ## Features ✨
-- [x] Free to use, no login, no sign up required.
-- [x] All kinds of filters, sorts to play with and decide your ideal college.
-- [x] Takes into consideration, all the criteria & resevations- rank, sex, caste etc.
-- [x] Get cutoffs for any branch in any IIT, NIT or GFTI individually.
+- [x] Free to use, no login, no sign up required. 🆓
+- [x] All kinds of filters, sorts to play with and decide your ideal college. 🏫
+- [x] Takes into consideration, all the criteria & resevations- rank, sex, caste etc. 🚀
+- [x] Get cutoffs for any branch in any IIT, NIT or GFTI individually. 📄
+- [x] Dark and light modes. 🌓
+- [x] Single activity design.  
 
 ## Installation
 
@@ -41,7 +43,6 @@ Install from the [Play Store](https://play.google.com/store/apps/details?id=com.
 - [Jetpack Compose UI Toolkit](https://developer.android.com/jetpack/compose) - Modern UI development toolkit.
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - Collection of libraries that help you design robust, testable, and maintainable apps.
   - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores UI-related data that isn't destroyed on UI changes.
-  - [Room](https://developer.android.com/topic/libraries/architecture/room) - Room is an Android library which is an ORM that wraps Android's native SQLite database.
   - [StateFlow and SharedFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow#:~:text=StateFlow%20is%20a%20state%2Dholder,property%20of%20the%20MutableStateFlow%20class.) - StateFlow and SharedFlow are Flow APIs that enable flows to optimally emit state updates and emit values to multiple consumers.
 - [Dependency Injection](https://developer.android.com/training/dependency-injection) -
     - [Koin](https://insert-koin.io/docs/reference/koin-android/start) - A standard way to incorporate Koin dependency injection into an Android application.
