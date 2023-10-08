@@ -9,7 +9,7 @@
 ### CollegeSearch is a simple and powerful android application for filtering out the best college suited for you among all the IITs, NITs, IIITs and GFTIs in India.
 #### You just enter your JEE SCORE/RANK and boom, you get all the recommended colleges you can get into.
 
-Currently available on the Play Store.
+## Installation ⬇️
 
 <a href='https://play.google.com/store/apps/details?id=com.bera.josaahelpertool'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height='80px'/><a href="https://github.com/beradeep/collegesearch/releases/latest"><img alt="Get it on GitHub" src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png" height=80px />
 
@@ -20,23 +20,15 @@ Currently available on the Play Store.
 - [x] Get cutoffs for any branch in any IIT, NIT or GFTI individually. 📄
 - [x] Dark and light modes. 🌓
 - [x] Single activity design.  
-
-## Installation
-
-Install from the [Play Store](https://play.google.com/store/apps/details?id=com.bera.collegesearch)
     
-## Building
+## Building 🏗️
 
 1. Clone the project
 2. Open Android Studio IDE
 3. Go to File » New » Project from VCS
 4. Paste ``` https://github.com/beradeep/CollegeSearch.git ```
 
-## Tech Stack
-
-<img alt='Android' src='https://developer.android.com/static/images/cluster-illustrations/kotlin-hero.svg' height='100px'><img alt='Jetpack Compose' src='https://3.bp.blogspot.com/-VVp3WvJvl84/X0Vu6EjYqDI/AAAAAAAAPjU/ZOMKiUlgfg8ok8DY8Hc-ocOvGdB0z86AgCLcBGAsYHQ/s1600/jetpack%2Bcompose%2Bicon_RGB.png' height='100px'>
-
-# Built with 🛠
+## Tech Stack 🛠
 
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
 - [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - For asynchronous calls and tasks to utilize threads.
@@ -50,9 +42,9 @@ Install from the [Play Store](https://play.google.com/store/apps/details?id=com.
 - [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android.
 
 # Architecture 👷‍♂️
-This app uses [MVVM(Model View View-Model)](https://developer.android.com/topic/architecture#recommended-app-arch) architecture.
+This app uses [MVVM(Model View View-Model)](https://developer.android.com/topic/architecture#recommended-app-arch)  and Clean architecture.
 
-## Contributing
+## Contributing 🤝
 
 Contributions are always welcome. Feel free to make a pull request. Thanks to all the future contributors!
 
