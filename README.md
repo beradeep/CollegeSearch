@@ -16,7 +16,7 @@
 ## Features ✨
 - [x] Free to use, no login, no sign up required. 🆓
 - [x] All kinds of filters, sorts to play with and decide your ideal college. 🏫
-- [x] Takes into consideration, all the criteria & resevations- rank, sex, caste etc. 🚀
+- [x] Takes into consideration, all the criteria & reservations- rank, sex, caste etc. 🚀
 - [x] Get cutoffs for any branch in any IIT, NIT or GFTI individually. 📄
 - [x] Dark and light modes. 🌓
 - [x] Single activity design.  
@@ -27,6 +27,14 @@
 2. Open Android Studio IDE
 3. Go to File » New » Project from VCS
 4. Paste ``` https://github.com/beradeep/CollegeSearch.git ```
+5. Open the project.
+6. Grab your ```YOUR_API_KEY``` from https://api-ninjas.com
+7. Now, in your local.properties add the block
+``` 
+   API_KEY_QUOTES = YOUR_API_KEY
+   API_KEY_CUTOFF = c3423fd80cca7707fe15
+```
+8. Build and run
 
 ## Tech Stack 🛠
 
@@ -48,4 +56,4 @@ This app uses [MVVM(Model View View-Model)](https://developer.android.com/topic/
 
 Contributions are always welcome. Feel free to make a pull request. Thanks to all the future contributors!
 
-Higly appreciate leaving a :star: if you liked it!
+Highly appreciate leaving a :star: if you liked it!
