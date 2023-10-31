@@ -27,7 +27,7 @@
 2. Open Android Studio IDE
 3. Go to File » New » Project from VCS
 4. Paste ``` https://github.com/beradeep/CollegeSearch.git ```
-5. Open the project.
+5. Open the project
 6. Grab your ```YOUR_API_KEY``` from https://api-ninjas.com
 7. Now, in your local.properties add the block
 ``` 
