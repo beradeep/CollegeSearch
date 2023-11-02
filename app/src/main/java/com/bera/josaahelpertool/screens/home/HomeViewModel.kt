@@ -24,18 +24,18 @@ class HomeViewModel @Inject constructor(
 
     val drawableIds =
         arrayOf(
-            R.drawable.iit_vector,
-            R.drawable.nit_vector,
-            R.drawable.iiit_vector,
-            R.drawable.gfti_vector
+            R.drawable.img_5,
+            R.drawable.img_2,
+            R.drawable.img_6,
+            R.drawable.img_1
         )
 
     val slideImage =
         arrayOf(
-            R.drawable.iitbombay,
+            R.drawable.ogc,
             R.drawable.iit,
             R.drawable.nit,
-            R.drawable.ogc
+            R.drawable.iitbombay
         )
 
     suspend fun changeImagePage(pagerState: PagerState, next: Boolean) {

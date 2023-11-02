@@ -37,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -192,7 +193,7 @@ fun TopHalf(
 
         FilledTonalIconButton(
             onClick = { scope.launch { changeImage(pagerState, false) } },
-            modifier = Modifier.align(Alignment.CenterStart)
+            modifier = Modifier.align(Alignment.CenterStart).alpha(0.6f)
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowLeft,
@@ -203,7 +204,7 @@ fun TopHalf(
 
         FilledTonalIconButton(
             onClick = { scope.launch { changeImage(pagerState, true) } },
-            modifier = Modifier.align(Alignment.CenterEnd),
+            modifier = Modifier.align(Alignment.CenterEnd).alpha(0.6f),
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowRight,
@@ -225,17 +226,17 @@ fun TopHalf(
             )
         }
 
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(10.dp)
-        ) {
-            ThemeSwitcher(
-                darkTheme = isDarkMode,
-                onClick = onDarkModeToggle,
-                size = 50.dp
-            )
-        }
+//        Box(
+//            modifier = Modifier
+//                .align(Alignment.TopEnd)
+//                .padding(10.dp)
+//        ) {
+//            ThemeSwitcher(
+//                darkTheme = isDarkMode,
+//                onClick = onDarkModeToggle,
+//                size = 50.dp
+//            )
+//        }
     }
 }
 
@@ -251,7 +252,7 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
 
     val categoryArr = arrayOf("iit", "nit", "iiit", "ogc")
 
-    CustomOutlinedCard(modifier = modifier, label = " Cutoffs ") {
+    CustomOutlinedCard(modifier = modifier, label = " All Cutoffs ") {
         LazyVerticalGrid(
             columns = GridCells.Fixed(count = 2),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -259,19 +260,19 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
             contentPadding = PaddingValues(10.dp)
         ) {
             items(4, key = { categoryArr[it] }) {
-                OutlinedButton(
+                Button(
                     onClick = { navController.navigate(Routes.CollegeScreen.route + "/" + categoryArr[it]) },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     ),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(14.dp),
                     elevation = ButtonDefaults.buttonElevation(2.dp),
                     contentPadding = PaddingValues(
-                        start = 8.dp,
-                        end = 4.dp,
-                        top = 4.dp,
-                        bottom = 4.dp
+                        start = 16.dp,
+                        end = 8.dp,
+                        top = 8.dp,
+                        bottom = 8.dp
                     )
                 ) {
                     Row(
@@ -285,7 +286,7 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
                             contentDescription = cardText[it],
                             modifier = Modifier
                                 .padding(4.dp)
-                                .weight(2f)
+                                .weight(1.6f)
                         )
                         Text(
                             text = cardText[it],

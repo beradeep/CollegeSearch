@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,6 +40,17 @@ fun CBRCutoffs(
             .padding(2.dp), contentAlignment = Alignment.Center
     ) {
         LazyColumn(Modifier.fillMaxWidth()) {
+            if (!isLoading) {
+                item {
+                    Text(
+                        text = "Top recommendations (in order):",
+                        modifier = Modifier.padding(start = 2.dp, bottom = 6.dp),
+                        fontStyle = FontStyle.Italic,
+                        fontWeight = FontWeight.Medium,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer
+                    )
+                }
+            }
             items(if (isLoading) List(20) { FakeCutoffItem } else cutoffs) {
                 ShimmerListItem(
                     isLoading = isLoading,

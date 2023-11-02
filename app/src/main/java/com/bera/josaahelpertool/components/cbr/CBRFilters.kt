@@ -22,6 +22,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.rounded.Sort
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
@@ -78,7 +80,8 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                 ) {
                     OutlinedButton(
                         onClick = { onAction(CBRAction.ExpandFilters) },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(4.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
@@ -91,7 +94,7 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                 animationSpec = tween(durationMillis = 300), label = ""
                             )
                             Icon(
-                                imageVector = Icons.Default.Settings,
+                                imageVector = Icons.Rounded.Tune,
                                 contentDescription = "Filters",
                                 modifier = Modifier
                                     .padding(2.dp)
@@ -102,7 +105,8 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                     }
                     OutlinedButton(
                         onClick = { onAction(CBRAction.Sort(if (state.sortBy == "CR") "OR" else "CR")) },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(4.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
@@ -110,21 +114,24 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                     .padding(2.dp)
                                     .weight(3f)
                             )
+                            val rotationState by animateFloatAsState(
+                                targetValue = if (state.sortBy == "OR") 180f else 360f,
+                                animationSpec = tween(durationMillis = 200), label = ""
+                            )
                             Icon(
-                                imageVector = Icons.Default.Menu,
+                                imageVector = Icons.Rounded.Sort,
                                 contentDescription = "Sort by",
                                 modifier = Modifier
                                     .padding(2.dp)
                                     .weight(1f)
+                                    .rotate(rotationState)
                             )
                         }
                     }
                 }
 
                 AnimatedVisibility(
-                    visible = state.expandFilters,
-                    enter = expandVertically(tween(durationMillis = 300, easing = LinearEasing)),
-                    exit = shrinkVertically(tween(durationMillis = 300, easing = LinearEasing))
+                    visible = state.expandFilters
                 ) {
                     Column(verticalArrangement = Arrangement.spacedBy(1.dp)) {
                         Card(
