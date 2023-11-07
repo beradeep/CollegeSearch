@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,7 +31,6 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,14 +42,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.bera.josaahelpertool.components.ThemeSwitcher
 import com.bera.josaahelpertool.navigation.Routes
 import com.bera.josaahelpertool.utils.CustomOutlinedCard
 import com.bera.josaahelpertool.utils.ShimmerListItem
@@ -69,6 +67,14 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(
+                text = "Ultimate JoSAA",
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 24.sp,
+                modifier = Modifier.align(Alignment.Start).padding(6.dp),
+                fontFamily = FontFamily.Serif,
+                color = MaterialTheme.colorScheme.primary
+            )
             TopHalf(
                 modifier = Modifier
                     .weight(10f)
@@ -98,7 +104,8 @@ fun HomeScreen(
                 text = "Made with ♥ by BERA",
                 modifier = Modifier.weight(0.6f),
                 textAlign = TextAlign.Center,
-                fontSize = 11.sp
+                fontSize = 11.sp,
+                fontFamily = FontFamily.Serif
             )
         }
 
@@ -124,10 +131,12 @@ fun QuoteBox(modifier: Modifier, quote: String, author: String, isLoading: Boole
                             .padding(10.dp)
                     ) {
                         Text(
-                            text = "Quote of the day: ",
+                            text = "Quote of the day",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Justify,
-                            style = MaterialTheme.typography.titleMedium
+                            fontFamily = FontFamily.Cursive,
+                            fontWeight = FontWeight.Black,
+                            color = MaterialTheme.colorScheme.onTertiaryContainer
                         )
                         Spacer(
                             modifier = Modifier
@@ -135,10 +144,11 @@ fun QuoteBox(modifier: Modifier, quote: String, author: String, isLoading: Boole
                                 .height(6.dp)
                         )
                         Text(
-                            text = "\" $quote \"",
+                            text = "' $quote '",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Justify,
-                            fontStyle = FontStyle.Italic
+                            fontFamily = FontFamily.Cursive,
+                            fontWeight = FontWeight.SemiBold
                         )
                         Spacer(
                             modifier = Modifier
@@ -149,7 +159,8 @@ fun QuoteBox(modifier: Modifier, quote: String, author: String, isLoading: Boole
                             text = "- $author",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.End,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.ExtraBold,
+                            fontFamily = FontFamily.Cursive
                         )
                     }
                 }
@@ -193,7 +204,9 @@ fun TopHalf(
 
         FilledTonalIconButton(
             onClick = { scope.launch { changeImage(pagerState, false) } },
-            modifier = Modifier.align(Alignment.CenterStart).alpha(0.6f)
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .alpha(0.6f)
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowLeft,
@@ -204,7 +217,9 @@ fun TopHalf(
 
         FilledTonalIconButton(
             onClick = { scope.launch { changeImage(pagerState, true) } },
-            modifier = Modifier.align(Alignment.CenterEnd).alpha(0.6f),
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .alpha(0.6f),
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowRight,
@@ -273,10 +288,13 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
                         end = 8.dp,
                         top = 8.dp,
                         bottom = 8.dp
-                    )
+                    ),
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(2.5f),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
@@ -286,7 +304,8 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
                             contentDescription = cardText[it],
                             modifier = Modifier
                                 .padding(4.dp)
-                                .weight(1.6f)
+                                .weight(1f)
+                                .aspectRatio(1f)
                         )
                         Text(
                             text = cardText[it],
@@ -302,11 +321,3 @@ fun MainGrid(modifier: Modifier, navController: NavController, drawableIds: Arra
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun HomePreview() {
-//    CollegeSearchTheme {
-//        HomeScreen(navController = NavController(LocalContext.current))
-//    }
-//}
