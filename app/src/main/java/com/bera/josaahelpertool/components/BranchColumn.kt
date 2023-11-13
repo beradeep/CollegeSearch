@@ -1,31 +1,44 @@
 package com.bera.josaahelpertool.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.bera.josaahelpertool.R
 import com.bera.josaahelpertool.models.Cutoff
 import com.bera.josaahelpertool.navigation.Routes
 import com.bera.josaahelpertool.use_cases.GetBranchesUseCase
+import com.bera.josaahelpertool.utils.CustomDivider
 import com.bera.josaahelpertool.utils.Resource
 import com.bera.josaahelpertool.utils.ShimmerListItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,6 +58,13 @@ fun BranchColumn(
 
     Surface(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)) {
+            item {
+                CustomDivider(
+                    modifier = Modifier.padding(10.dp),
+                    text = collegeName.uppercase(),
+                    alignment = Alignment.CenterStart
+                )
+            }
             items(if (isLoading.value) List(20) { "" }
             else branches.value) { branch ->
                 ShimmerListItem(
@@ -54,24 +74,29 @@ fun BranchColumn(
                         .fillMaxWidth()
                         .padding(top = 16.dp, start = 4.dp, end = 4.dp)
                 ) {
-                    OutlinedButton(
+                    Row(
                         modifier = Modifier
-                            .height(80.dp)
                             .fillMaxWidth()
-                            .padding(vertical = 5.dp),
-                        shape = RoundedCornerShape(12.dp),
-                        onClick = { navController.navigate(Routes.CutoffScreen.route + "/$collegeName/$branch") }
+                            .heightIn(min = 80.dp)
+                            .clickable {
+                                navController.navigate(Routes.CutoffScreen.route + "/$collegeName/$branch")
+                            },
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                modifier = Modifier.padding(5.dp),
-                                text = branch,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Icon(
+                            painter = painterResource(id = R.drawable.icons8_circled_b),
+                            contentDescription = "branch",
+                            tint = Color.Gray
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = branch,
+                            fontSize = 16.sp,
+                            textAlign = TextAlign.Start
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
                     }
                 }
             }

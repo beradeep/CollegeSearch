@@ -33,9 +33,7 @@ class MainActivity : ComponentActivity() {
         connectivityObserver = ConnectivityObserver(applicationContext)
         setContent {
 
-            val systemDefault = isSystemInDarkTheme()
-            var isDarkMode by remember { mutableStateOf(systemDefault) }
-            CollegeSearchTheme(darkTheme = isDarkMode) {
+            CollegeSearchTheme {
 
                 val status by connectivityObserver.observe()
                     .collectAsState(initial = ConnectivityStatus.Unavailable)
@@ -43,10 +41,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     when(status) {
-                        ConnectivityStatus.Available -> Navigation(isDarkMode) {
-                            isDarkMode = !isDarkMode
-                        }
-
+                        ConnectivityStatus.Available -> Navigation()
                         else -> {
                             var showError by remember {
                                 mutableStateOf(false)

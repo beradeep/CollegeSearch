@@ -38,11 +38,50 @@ class HomeViewModel @Inject constructor(
             R.drawable.iitbombay
         )
 
+    data class Link(
+        val link: String,
+        val imageRes: Int,
+        val text: String
+    )
+
+    val links = arrayOf(
+        Link(
+            link = "https://jeemain.nta.nic.in/",
+            imageRes = R.drawable.jee_main,
+            text = "JEE Main"
+        ),
+        Link(
+            link = "https://jeeadv.ac.in/",
+            imageRes = R.drawable.jee_adv,
+            text = "JEE Adv"
+        ),
+        Link(
+            link = "https://josaa.nic.in/",
+            imageRes = R.drawable.josaa,
+            text = "JoSAA"
+        ),
+        Link(
+            link = "https://csab.nic.in/",
+            imageRes = R.drawable.csab,
+            text = "CSAB"
+        )
+    )
+
+    val imageTexts = arrayOf(
+        "IIIT Allahabad",
+        "IIT Delhi",
+        "NIT Rourkela",
+        "IIT Bombay"
+    )
+
     suspend fun changeImagePage(pagerState: PagerState, next: Boolean) {
         pagerState
             .animateScrollToPage(
-                if (next) pagerState.currentPage + 1
-                else pagerState.currentPage - 1
+                if (next) {
+                    if (pagerState.currentPage == pagerState.pageCount - 1) 0 else (pagerState.currentPage + 1)
+                } else {
+                    if (pagerState.currentPage == 0) pagerState.pageCount - 1 else (pagerState.currentPage - 1)
+                }
             )
     }
 

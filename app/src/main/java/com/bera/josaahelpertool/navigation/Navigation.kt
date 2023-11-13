@@ -11,17 +11,20 @@ import com.bera.josaahelpertool.components.CollegeColumn
 import com.bera.josaahelpertool.components.CutoffColumn
 import com.bera.josaahelpertool.screens.cutoffsbyrank.CBRScreen
 import com.bera.josaahelpertool.screens.home.HomeScreen
+import com.bera.josaahelpertool.screens.search.SearchScreen
+import com.bera.josaahelpertool.screens.webview.WebView
 
 @Composable
-fun Navigation(isDarkMode: Boolean, onDarkModeToggle: () -> Unit) {
+fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Routes.HomeScreen.route) {
         composable(Routes.HomeScreen.route) {
-            HomeScreen(
-                navController = navController,
-                isDarkMode = isDarkMode,
-                onDarkModeToggle = onDarkModeToggle
-            )
+            HomeScreen(navController = navController)
+        }
+        composable(Routes.WebView.route + "/{url-str}", listOf(navArgument("url-str") {
+            type = NavType.StringType
+        })) {
+            WebView(url = it.arguments?.getString("url-str") ?: "")
         }
         composable(Routes.CollegeScreen.route + "/{category}", listOf(navArgument("category") {
             type = NavType.StringType
@@ -50,6 +53,8 @@ fun Navigation(isDarkMode: Boolean, onDarkModeToggle: () -> Unit) {
         composable(Routes.CBRScreen.route) {
             CBRScreen()
         }
+        composable(Routes.SearchScreen.route) {
+            SearchScreen(navController = navController)
+        }
     }
-
 }
