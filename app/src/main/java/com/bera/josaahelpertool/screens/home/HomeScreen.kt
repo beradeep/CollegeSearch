@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -36,10 +35,10 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -59,7 +58,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.bera.josaahelpertool.R
 import com.bera.josaahelpertool.navigation.Routes
 import com.bera.josaahelpertool.ui.theme.rubikFamily
 import com.bera.josaahelpertool.utils.CustomDivider
@@ -145,7 +143,7 @@ fun HomeScreen(
             }
             item { Spacer(modifier = Modifier.height(6.dp)) }
             item {
-                FeaturedLinks(Modifier.heightIn(5.dp, 400.dp), navController, viewModel.links)
+                FeaturedLinks(Modifier.heightIn(5.dp, 400.dp), viewModel.links)
             }
             item {
                 Spacer(modifier = Modifier.height(6.dp))
@@ -193,7 +191,8 @@ fun HomeScreen(
                     text = "Made with ♥ by BERA",
                     textAlign = TextAlign.Center,
                     fontSize = 11.sp,
-                    fontFamily = FontFamily.Serif,
+                    fontFamily = rubikFamily,
+                    color = Color.Gray,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
             }
@@ -207,7 +206,6 @@ private var intent = CustomTabsIntent.Builder()
 @Composable
 private fun FeaturedLinks(
     modifier: Modifier = Modifier,
-    navController: NavController,
     links: Array<HomeViewModel.Link>
 ) {
     Column {
@@ -371,19 +369,24 @@ fun TopHalf(
             )
         }
 
-        Button(
+        OutlinedButton(
+            colors = ButtonDefaults.outlinedButtonColors(
+                containerColor = Color.Black.copy(0.6f)
+            ),
+            onClick = { navController.navigate(Routes.CBRScreen.route) },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .offset(y = (-60).dp),
-            onClick = { navController.navigate(Routes.CBRScreen.route) },
-            elevation = ButtonDefaults.buttonElevation(6.dp),
         ) {
             Text(
-                modifier = Modifier.padding(10.dp),
+                modifier = Modifier
+                    .padding(10.dp),
                 text = "NEW COLLEGE PREDICTOR",
-                fontSize = 15.sp,
                 fontFamily = rubikFamily,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                color = Color(0xFF81D5FC)
             )
         }
 
@@ -397,7 +400,6 @@ fun TopHalf(
             fontWeight = FontWeight.Thin,
             color = Color.White.copy(alpha = 0.8f)
         )
-
     }
 }
 

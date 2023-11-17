@@ -12,7 +12,6 @@ import com.bera.josaahelpertool.components.CutoffColumn
 import com.bera.josaahelpertool.screens.cutoffsbyrank.CBRScreen
 import com.bera.josaahelpertool.screens.home.HomeScreen
 import com.bera.josaahelpertool.screens.search.SearchScreen
-import com.bera.josaahelpertool.screens.webview.WebView
 
 @Composable
 fun Navigation() {
@@ -20,11 +19,6 @@ fun Navigation() {
     NavHost(navController = navController, startDestination = Routes.HomeScreen.route) {
         composable(Routes.HomeScreen.route) {
             HomeScreen(navController = navController)
-        }
-        composable(Routes.WebView.route + "/{url-str}", listOf(navArgument("url-str") {
-            type = NavType.StringType
-        })) {
-            WebView(url = it.arguments?.getString("url-str") ?: "")
         }
         composable(Routes.CollegeScreen.route + "/{category}", listOf(navArgument("category") {
             type = NavType.StringType

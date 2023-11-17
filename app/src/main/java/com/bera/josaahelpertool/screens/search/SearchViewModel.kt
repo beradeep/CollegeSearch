@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bera.josaahelpertool.models.CutoffItem
 import com.bera.josaahelpertool.use_cases.GetCutoffsUseCase
+import com.bera.josaahelpertool.utils.Constants
 import com.bera.josaahelpertool.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -35,36 +36,70 @@ class SearchViewModel @Inject constructor(
     val collegeResults = searchText
         .debounce(1000)
         .combine(allCutoffs) { searchText, cutoffs ->
-        if (searchText.isBlank()) {
-            emptyList()
-        } else {
-            cutoffs.map { it.Institute }.distinct().filter {
-                it.contains(searchText, ignoreCase = true)
+            if (searchText.isBlank()) {
+                emptyList()
+            } else {
+                cutoffs.map { it.Institute }.distinct().filter {
+                    if (searchText.startsWith("iit", ignoreCase = true)) {
+                        return@filter it.contains(
+                            searchText.replaceFirst(
+                                "iit",
+                                Constants.IIT_STRING,
+                                ignoreCase = true
+                            ),
+                            ignoreCase = true
+                        ) || it.contains(
+                            searchText.replaceFirst(
+                                "iit",
+                                Constants.IIT_STRING_1,
+                                ignoreCase = true
+                            ),
+                            ignoreCase = true
+                        ) || it.contains(searchText, ignoreCase = true)
+                    } else if (searchText.startsWith("nit", ignoreCase = true)) {
+                        return@filter it.contains(
+                            searchText.replaceFirst(
+                                "nit",
+                                Constants.NIT_STRING,
+                                ignoreCase = true
+                            ),
+                            ignoreCase = true
+                        ) || it.contains(searchText, ignoreCase = true)
+                    } else if (searchText.startsWith("iiit", ignoreCase = true)) {
+                        return@filter it.contains(
+                            searchText.replaceFirst(
+                                "iiit",
+                                Constants.IIIT_STRING,
+                                ignoreCase = true
+                            ),
+                            ignoreCase = true
+                        ) || it.contains(searchText, ignoreCase = true)
+                    } else it.contains(searchText, ignoreCase = true)
+                }
             }
-        }
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        emptyList()
-    )
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            emptyList()
+        )
 
 
     @OptIn(FlowPreview::class)
     val branchResults = searchText
         .debounce(1000)
         .combine(allCutoffs) { searchText, cutoffs ->
-        if (searchText.isBlank()) {
-            emptyList()
-        } else {
-            cutoffs.map { it.AcademicProgramName }.distinct().filter {
-                it.contains(searchText, ignoreCase = true)
+            if (searchText.isBlank()) {
+                emptyList()
+            } else {
+                cutoffs.map { it.AcademicProgramName }.distinct().filter {
+                    it.contains(searchText, ignoreCase = true)
+                }
             }
-        }
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        emptyList()
-    )
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            emptyList()
+        )
 
     init {
         getCutoffs()

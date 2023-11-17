@@ -1,11 +1,8 @@
 package com.bera.josaahelpertool.components.cbr
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,16 +17,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.Sort
 import androidx.compose.material.icons.rounded.Tune
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,10 +44,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bera.josaahelpertool.screens.cutoffsbyrank.CBRAction
 import com.bera.josaahelpertool.screens.cutoffsbyrank.CBRState
+import com.bera.josaahelpertool.ui.theme.rubikFamily
 import com.bera.josaahelpertool.utils.ShimmerListItem
 
 @Composable
 fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAction) -> Unit) {
+
+    var showSortDialog by remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
@@ -70,8 +70,7 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
         else
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 4.dp),
+                    .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(1.dp)
             ) {
                 Row(
@@ -84,11 +83,7 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                         shape = RoundedCornerShape(4.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = "Filters", modifier = Modifier
-                                    .padding(2.dp)
-                                    .weight(3f)
-                            )
+
                             val rotationState by animateFloatAsState(
                                 targetValue = if (state.expandFilters) 270f else 0f,
                                 animationSpec = tween(durationMillis = 300), label = ""
@@ -101,33 +96,45 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                     .weight(1f)
                                     .rotate(rotationState)
                             )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = "Filters", modifier = Modifier
+                                    .padding(2.dp)
+                                    .weight(3f),
+                                fontFamily = rubikFamily
+                            )
                         }
                     }
                     OutlinedButton(
-                        onClick = { onAction(CBRAction.Sort(if (state.sortBy == "CR") "OR" else "CR")) },
+                        onClick = { showSortDialog = true },
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(4.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = "Sort by:   ${state.sortBy}", modifier = Modifier
-                                    .padding(2.dp)
-                                    .weight(3f)
-                            )
-                            val rotationState by animateFloatAsState(
-                                targetValue = if (state.sortBy == "OR") 180f else 360f,
-                                animationSpec = tween(durationMillis = 200), label = ""
-                            )
                             Icon(
                                 imageVector = Icons.Rounded.Sort,
                                 contentDescription = "Sort by",
                                 modifier = Modifier
                                     .padding(2.dp)
                                     .weight(1f)
-                                    .rotate(rotationState)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = "Sort by:   ${state.sortBy}", modifier = Modifier
+                                    .padding(2.dp)
+                                    .weight(3f),
+                                fontFamily = rubikFamily
                             )
                         }
                     }
+                }
+
+                if (showSortDialog) {
+                    SortDialogBox(
+                        state = state,
+                        onAction = onAction,
+                        onDismissRequest = { showSortDialog = false },
+                    )
                 }
 
                 AnimatedVisibility(
@@ -138,12 +145,17 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                             modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(4.dp)
                         ) {
                             Column(Modifier.padding(4.dp)) {
-                                Text(text = "Rank", fontWeight = FontWeight.Bold)
+                                Text(
+                                    text = "Rank",
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = rubikFamily
+                                )
                                 val focusManager = LocalFocusManager.current
                                 val ignoredRegex = Regex("[.,\\s-]")
                                 var rankText by remember {
                                     mutableStateOf(state.rank.toString())
                                 }
+                                Spacer(modifier = Modifier.height(4.dp))
                                 OutlinedTextField(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -174,7 +186,11 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                 shape = RoundedCornerShape(4.dp)
                             ) {
                                 Column(Modifier.padding(4.dp)) {
-                                    Text(text = "Exam", fontWeight = FontWeight.Bold)
+                                    Text(
+                                        text = "Exam",
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = rubikFamily
+                                    )
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                         Row(
                                             Modifier.fillMaxWidth(),
@@ -208,7 +224,11 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                 shape = RoundedCornerShape(4.dp)
                             ) {
                                 Column(Modifier.padding(4.dp)) {
-                                    Text(text = "State", fontWeight = FontWeight.Bold)
+                                    Text(
+                                        text = "State",
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = rubikFamily
+                                    )
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                         Row(
                                             Modifier.fillMaxWidth(),
@@ -243,7 +263,11 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                 shape = RoundedCornerShape(4.dp)
                             ) {
                                 Column(Modifier.padding(4.dp)) {
-                                    Text(text = "Gender", fontWeight = FontWeight.Bold)
+                                    Text(
+                                        text = "Gender",
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = rubikFamily
+                                    )
                                     Row(
                                         Modifier.fillMaxWidth(),
                                         horizontalArrangement = Arrangement.SpaceEvenly
@@ -284,7 +308,11 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                                 shape = RoundedCornerShape(4.dp)
                             ) {
                                 Column(Modifier.padding(4.dp)) {
-                                    Text(text = "PwD", fontWeight = FontWeight.Bold)
+                                    Text(
+                                        text = "PwD",
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = rubikFamily
+                                    )
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                         Row(
                                             Modifier.fillMaxWidth(),
@@ -321,7 +349,11 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
                             modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(4.dp)
                         ) {
                             Column(Modifier.padding(4.dp)) {
-                                Text(text = "Quota", fontWeight = FontWeight.Bold)
+                                Text(
+                                    text = "Quota",
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = rubikFamily
+                                )
                                 Row(
                                     Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -388,4 +420,59 @@ fun CBRFilters(modifier: Modifier = Modifier, state: CBRState, onAction: (CBRAct
 
             }
     }
+}
+
+@Composable
+fun SortDialogBox(state: CBRState, onAction: (CBRAction) -> Unit, onDismissRequest: () -> Unit) {
+    var selectedOption by remember { mutableStateOf(state.sortBy) }
+    AlertDialog(
+        onDismissRequest = { onDismissRequest() },
+        title = {
+            Text(
+                "Sort By",
+                fontFamily = rubikFamily,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+        },
+        text = {
+            Column {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        selected = selectedOption == "CR",
+                        onClick = { selectedOption = "CR" })
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("Closing Rank", fontFamily = rubikFamily)
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        selected = selectedOption == "OR",
+                        onClick = { selectedOption = "OR" })
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("Opening Rank", fontFamily = rubikFamily)
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                // Handle confirm option
+                onAction(CBRAction.Sort(selectedOption))
+                onDismissRequest()
+            }) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = {
+                // Handle dismiss option
+                onDismissRequest()
+            }) {
+                Text("Cancel")
+            }
+        }
+    )
 }
