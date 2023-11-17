@@ -14,6 +14,14 @@ class ConnectivityObserver(context: Context) {
     private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
+    fun status(): ConnectivityStatus {
+        return if (connectivityManager.activeNetworkInfo?.isConnected == true) {
+            ConnectivityStatus.Available
+        } else {
+            ConnectivityStatus.Unavailable
+        }
+    }
+
     fun observe(): Flow<ConnectivityStatus> {
         return callbackFlow {
             val callback = object: ConnectivityManager.NetworkCallback() {

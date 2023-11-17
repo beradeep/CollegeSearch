@@ -5,12 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.bera.josaahelpertool.navigation.Navigation
 import com.bera.josaahelpertool.network.connectivity.ConnectivityObserver
@@ -18,18 +14,17 @@ import com.bera.josaahelpertool.network.connectivity.ConnectivityStatus
 import com.bera.josaahelpertool.screens.home.NetworkErrorScreen
 import com.bera.josaahelpertool.ui.theme.CollegeSearchTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var connectivityObserver: ConnectivityObserver
+    @Inject lateinit var connectivityObserver: ConnectivityObserver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        connectivityObserver = ConnectivityObserver(applicationContext)
+
         setContent {
 
             CollegeSearchTheme {
@@ -42,16 +37,17 @@ class MainActivity : ComponentActivity() {
                     when(status) {
                         ConnectivityStatus.Available -> Navigation()
                         else -> {
-                            var showError by remember {
-                                mutableStateOf(false)
-                            }
-                            LaunchedEffect(Unit) {
-                                withContext(Dispatchers.IO) {
-                                    delay(2000)
-                                    showError = true
+                            val cacheDir: File = applicationContext.cacheDir
+                            if (cacheDir.exists()) {
+                                val httpCacheDir = File(cacheDir, "http-cache")
+                                if (httpCacheDir.exists()) {
+                                    Navigation()
+                                } else {
+                                    NetworkErrorScreen(isVisible = true)
                                 }
+                            } else {
+                                NetworkErrorScreen(isVisible = true)
                             }
-                            NetworkErrorScreen(isVisible = showError)
                         }
                     }
                 }

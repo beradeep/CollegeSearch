@@ -98,9 +98,8 @@ dependencies {
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-
-    //GSON converter
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
 
     //Coil
     implementation "io.coil-kt:coil-compose:2.4.0"
@@ -108,6 +107,7 @@ dependencies {
     //Extended Icons
     implementation("androidx.compose.material:material-icons-extended:1.5.0")
 
+    //Browser View
     implementation 'androidx.browser:browser:1.6.0'
 
 }
