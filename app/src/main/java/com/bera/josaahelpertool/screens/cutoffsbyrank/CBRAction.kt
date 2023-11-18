@@ -1,5 +1,8 @@
 package com.bera.josaahelpertool.screens.cutoffsbyrank
 
+import androidx.annotation.Keep
+
+@Keep
 sealed class CBRAction {
     data class Rank(val rank: Int): CBRAction()
     data class Exam(val exam: String): CBRAction()

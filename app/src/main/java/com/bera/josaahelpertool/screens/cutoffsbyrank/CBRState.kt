@@ -1,7 +1,9 @@
 package com.bera.josaahelpertool.screens.cutoffsbyrank
 
+import androidx.annotation.Keep
 import com.bera.josaahelpertool.models.CutoffItem
 
+@Keep
 data class CBRState(
     val rank: Int = 10000,
     val exam: String = "Main",

@@ -1,7 +1,9 @@
 package com.bera.josaahelpertool.models
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class CutoffItem(
     @SerializedName("Academic Program Name")
     val AcademicProgramName: String,

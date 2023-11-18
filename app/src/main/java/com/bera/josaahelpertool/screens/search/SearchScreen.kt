@@ -33,20 +33,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bera.josaahelpertool.R
 import com.bera.josaahelpertool.navigation.Routes
-import com.bera.josaahelpertool.ui.theme.rubikFamily
-import com.bera.josaahelpertool.utils.ShimmerListItem
 
 @Composable
-fun SearchScreen(navController: NavController, viewModel: SearchViewModel = hiltViewModel()) {
+fun SearchScreen(navController: NavController, viewModel: SearchViewModel) {
 
     val focusManager = LocalFocusManager.current
     val focusRequester = FocusRequester()

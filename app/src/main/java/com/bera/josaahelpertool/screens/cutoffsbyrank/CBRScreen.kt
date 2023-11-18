@@ -5,16 +5,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.bera.josaahelpertool.components.cbr.CBRCutoffs
 import com.bera.josaahelpertool.components.cbr.CBRFilters
 
 @Composable
-fun CBRScreen(viewModel: CBRViewModel = hiltViewModel()) {
+fun CBRScreen(viewModel: CBRViewModel) {
 
     val state = viewModel.state
 

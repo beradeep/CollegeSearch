@@ -26,7 +26,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -44,7 +43,7 @@ import javax.inject.Inject
 
 @Composable
 fun CutoffColumn(
-    viewModel: CutoffColumnViewModel = hiltViewModel(),
+    viewModel: CutoffColumnViewModel,
 ) {
     val isLoading = viewModel.loading
     val cutoffs = viewModel.finalCutoffs

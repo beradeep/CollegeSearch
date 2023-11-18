@@ -56,7 +56,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bera.josaahelpertool.navigation.Routes
 import com.bera.josaahelpertool.ui.theme.rubikFamily
@@ -69,7 +68,7 @@ import kotlin.reflect.KSuspendFunction2
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
 

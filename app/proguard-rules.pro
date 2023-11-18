@@ -19,3 +19,26 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Kotlin
+-dontwarn kotlin.**
+-keep class kotlin.** { *; }
+
+# Retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+# OkHttp
+-dontwarn okhttp3.**
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+
+# Gson
+-dontwarn com.google.gson.**
+-keep class com.google.gson.** { *; }
+
+# Dagger Hilt
+-dontwarn dagger.hilt.android.**
+-keep class dagger.hilt.android.** { *; }
