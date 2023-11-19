@@ -45,8 +45,8 @@
   - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores UI-related data that isn't destroyed on UI changes.
   - [StateFlow and SharedFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow#:~:text=StateFlow%20is%20a%20state%2Dholder,property%20of%20the%20MutableStateFlow%20class.) - StateFlow and SharedFlow are Flow APIs that enable flows to optimally emit state updates and emit values to multiple consumers.
 - [Dependency Injection](https://developer.android.com/training/dependency-injection) -
-    - [Koin](https://insert-koin.io/docs/reference/koin-android/start) - A standard way to incorporate Koin dependency injection into an Android application.
-    - [Koin-ViewModel](https://insert-koin.io/docs/reference/koin-android/viewmodel) - DI for injecting ```ViewModel```. 
+    - [Dagger-Hilt](https://dagger.dev/hilt/) - A standard way to incorporate Koin dependency injection into an Android application.
+    - [Hilt-ViewModel](https://dagger.dev/hilt/view-model) - DI for injecting ```ViewModel```. 
 - [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android.
 
 # Architecture 👷‍♂️
