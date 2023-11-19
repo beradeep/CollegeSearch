@@ -87,9 +87,6 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
-    // Jetpack Compose Integration
-    implementation "androidx.navigation:navigation-compose:2.7.5"
-
     //Dagger-Hilt
     def hilt_version = "2.47"
     implementation "com.google.dagger:hilt-android:$hilt_version"

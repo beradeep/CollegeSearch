@@ -1,6 +1,5 @@
 package com.bera.josaahelpertool.navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
@@ -26,26 +25,6 @@ fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController,
         startDestination = Routes.HomeScreen.route,
-        enterTransition = {
-            slideIntoContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Start
-            )
-        },
-        exitTransition = {
-            slideOutOfContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Start
-            )
-        },
-        popEnterTransition = {
-            slideIntoContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.End
-            )
-        },
-        popExitTransition = {
-            slideOutOfContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.End
-            )
-        }
     ) {
         composable(Routes.HomeScreen.route) {
             val homeViewModel = hiltViewModel<HomeViewModel>()
