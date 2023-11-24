@@ -60,4 +60,8 @@ object AppModule {
     @Provides
     fun provideConnectivityObserver(@ApplicationContext appContext: Context): ConnectivityObserver =
         ConnectivityObserver(appContext)
+
+    @Singleton
+    @Provides
+    fun provideContext(@ApplicationContext appContext: Context): Context = appContext
 }

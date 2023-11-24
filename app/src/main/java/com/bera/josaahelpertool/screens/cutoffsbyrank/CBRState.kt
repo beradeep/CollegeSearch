@@ -11,7 +11,7 @@ data class CBRState(
     val gender: String = "Gender-Neutral",
     val quota: String = "OPEN",
     val pwd: Boolean = false,
-    val cutoffs: ArrayList<CutoffItem> = ArrayList(),
+    val cutoffs: List<CutoffItem> = listOf(),
     val loading: Boolean = false,
     val expandFilters: Boolean = true,
     val sortBy: String = "CR"

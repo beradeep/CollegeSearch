@@ -37,7 +37,7 @@ import com.bera.josaahelpertool.utils.ShimmerListItem
 
 @Composable
 fun CBRCutoffs(
-    cutoffs: ArrayList<CutoffItem>,
+    cutoffs: List<CutoffItem>,
     isLoading: Boolean
 ) {
     Box(

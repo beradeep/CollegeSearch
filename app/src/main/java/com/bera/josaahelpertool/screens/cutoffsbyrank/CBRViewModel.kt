@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bera.josaahelpertool.models.CutoffItem
+import com.bera.josaahelpertool.use_cases.GeneratePdfUseCase
 import com.bera.josaahelpertool.use_cases.GetCutoffsUseCase
 import com.bera.josaahelpertool.utils.Constants.IIT_STRING
 import com.bera.josaahelpertool.utils.Constants.IIT_STRING_1
@@ -15,16 +16,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class CBRViewModel @Inject constructor(
-    private val getCutoffsUseCase: GetCutoffsUseCase
+    private val getCutoffsUseCase: GetCutoffsUseCase,
+    private val generatePdfUseCase: GeneratePdfUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(CBRState())
         private set
-
     private lateinit var cutoffs: ArrayList<CutoffItem>
 
     init {
@@ -41,8 +43,17 @@ class CBRViewModel @Inject constructor(
             is CBRAction.PwD -> updatePwD(action.pwd)
             is CBRAction.ExpandFilters -> updateExpandedState()
             is CBRAction.Sort -> updateSortBy(action.sortBy)
+            is CBRAction.GeneratePdf -> generatePdf()
         }
         updateCutoffs(state.rank, state.exam, state.gender, state.pwd, state.quota, state.state)
+    }
+
+    private fun generatePdf() {
+        viewModelScope.launch {
+            withContext(Dispatchers.Default) {
+                generatePdfUseCase(cutoffs, state)
+            }
+        }
     }
 
     private fun getCutoffs() {
@@ -52,6 +63,7 @@ class CBRViewModel @Inject constructor(
                 is Resource.Loading -> {
                     state = state.copy(loading = true)
                 }
+
                 is Resource.Success -> {
                     cutoffs = result.data!!
                     state = state.copy(cutoffs = cutoffs)
@@ -72,21 +84,29 @@ class CBRViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Default) {
             val filterCutoffs = ArrayList<CutoffItem>()
             cutoffs.forEach {
-                if (rank < it.ClosingRank.toInt() && it.Gender.contains(gender) && it.SeatType.contains(
+                if (rank < it.ClosingRank.toInt() && (it.Gender.contains(gender) || it.Gender.contains(
+                        "Gender-Neutral"
+                    )) && (it.SeatType.contains(
                         quota
-                    ) && (if (pwd) it.SeatType.contains("PwD") else !it.SeatType.contains("PwD"))
+                    ) || it.SeatType.contains("OPEN"))
+                    && (if (pwd) it.SeatType.contains("PwD") else !it.SeatType.contains(
+                        "PwD"
+                    ))
                     && (if (exam == "Adv") it.Institute.contains(IIT_STRING) || it.Institute.contains(
                         IIT_STRING_1
                     ) else !it.Institute.contains(
                         IIT_STRING
                     ) && it.Quota == st)
-                )
+                ) {
                     filterCutoffs.add(it)
+                }
             }
-            filterCutoffs.sortBy { when (state.sortBy) {
-                "CR" -> it.ClosingRank.toInt()
-                else -> it.OpeningRank.toInt()
-            }  }
+            filterCutoffs.sortBy {
+                when (state.sortBy) {
+                    "CR" -> it.ClosingRank.toInt()
+                    else -> it.OpeningRank.toInt()
+                }
+            }
             state = state.copy(cutoffs = filterCutoffs)
         }
     }
@@ -122,5 +142,6 @@ class CBRViewModel @Inject constructor(
     private fun updateSortBy(sortBy: String) {
         state = state.copy(sortBy = sortBy)
     }
+
 }
 
