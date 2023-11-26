@@ -1,13 +1,21 @@
 
-<h1 align="center"> CollegeSearch </h1>
+<h1 align="center"> JoSAA Made Easy - College Search </h1>
 <p align="center"> <img alt="API" src="https://img.shields.io/badge/Api%2024+-50f270?logo=android&logoColor=black&style=for-the-badge"/>
   <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-a503fc?logo=kotlin&logoColor=white&style=for-the-badge"/>
   <img alt="Jetpack Compose" src="https://img.shields.io/static/v1?style=for-the-badge&message=Jetpack+Compose&color=4285F4&logo=Jetpack+Compose&logoColor=FFFFFF&label="/>
   <img alt="material" src="https://custom-icon-badges.demolab.com/badge/material%20you-lightblue?style=for-the-badge&logoColor=333&logo=material-you"/>
 </p>
 
-### CollegeSearch is a simple and powerful android application for filtering out the best college suited for you among all the IITs, NITs, IIITs and GFTIs in India.
+### JoSAA Made Easy is a simple and powerful android application for filtering out the best college suited for you among all the IITs, NITs, IIITs and GFTIs in India.
 #### You just enter your JEE SCORE/RANK and boom, you get all the recommended colleges you can get into.
+
+<p align="start">
+  <img src="https://github.com/beradeep/CollegeSearch/assets/124783808/f675daf1-8bd1-41a2-878e-531552bb2c63" width="160px"/>
+  <img src="https://github.com/beradeep/CollegeSearch/assets/124783808/dc56f8c6-2f0c-4d1b-82c9-d27d52ae4547" width="160px"/>
+  <img src="https://github.com/beradeep/CollegeSearch/assets/124783808/b81ad99c-9e0e-4867-9cf6-e92faa2a4d8c" width="160px"/>
+  <img src="https://github.com/beradeep/CollegeSearch/assets/124783808/1e0225f2-dc7b-48b6-b38b-814993a52e96" width="160px"/>
+  <img src="https://github.com/beradeep/CollegeSearch/assets/124783808/5d1ad59d-b4b4-4bdc-8d31-168ede2a4cf9" width="160px"/>
+</p>
 
 ## Installation ⬇️
 
