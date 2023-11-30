@@ -6,7 +6,8 @@
   <img alt="material" src="https://custom-icon-badges.demolab.com/badge/material%20you-lightblue?style=for-the-badge&logoColor=333&logo=material-you"/>
 </p>
 
-### JoSAA Made Easy is a simple and powerful android application for filtering out the best college suited for you among all the IITs, NITs, IIITs and GFTIs in India.
+> A powerful android app for searching and deciding the right engineering college for you in India.
+
 #### You just enter your JEE SCORE/RANK and boom, you get all the recommended colleges you can get into.
 
 <p align="start">
