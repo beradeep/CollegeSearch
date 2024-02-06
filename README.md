@@ -20,7 +20,7 @@
 
 ## Installation ⬇️
 
-<a href='https://play.google.com/store/apps/details?id=com.bera.josaahelpertool'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height='80px'/><a href="https://github.com/beradeep/CollegeSearch/releases/download/v3.0/app-release.apk"><img alt="Get it on GitHub" src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png" height=80px />
+<a href="https://github.com/beradeep/CollegeSearch/releases/download/v3.0/app-release.apk"><img alt="Get it on GitHub" src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png" height=80px /> <!-- <a href='https://play.google.com/store/apps/details?id=com.bera.josaahelpertool'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height='80px'/> -->
 
 ## Features ✨
 - [x] Free to use, no login, no sign up required. 🆓
