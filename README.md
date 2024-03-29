@@ -41,7 +41,7 @@
 7. Now, in your local.properties add the block
 ``` 
    API_KEY_QUOTES = YOUR_API_KEY
-   API_KEY_CUTOFF = c3423fd80cca7707fe15
+   API_KEY_CUTOFF = 1a5d601cf60cda365cf2
 ```
 8. Build and run
 
