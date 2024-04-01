@@ -1,6 +1,11 @@
+@file:OptIn(ExperimentalGlideComposeApi::class, ExperimentalGlideComposeApi::class,
+    ExperimentalGlideComposeApi::class
+)
+
 package com.bera.josaahelpertool.screens.home
 
 import android.net.Uri
+import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -42,6 +47,8 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,10 +64,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.bera.josaahelpertool.models.ui.TopHalfItem
 import com.bera.josaahelpertool.navigation.Routes
 import com.bera.josaahelpertool.ui.theme.rubikFamily
 import com.bera.josaahelpertool.utils.CustomDivider
 import com.bera.josaahelpertool.utils.ShimmerListItem
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import kotlinx.coroutines.launch
 import kotlin.reflect.KSuspendFunction2
 
@@ -70,6 +81,10 @@ fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel
 ) {
+
+
+    val slideImages by viewModel.slideImages.collectAsState()
+
     Surface(modifier = Modifier.fillMaxSize()) {
 
         LazyColumn(
@@ -153,8 +168,7 @@ fun HomeScreen(
                         .height(380.dp)
                         .padding(6.dp),
                     navController,
-                    viewModel.slideImage,
-                    viewModel.imageTexts,
+                    slideImages,
                     viewModel::changeImagePage,
                 )
             }
@@ -316,8 +330,7 @@ fun QuoteBox(modifier: Modifier, quote: String, author: String, isLoading: Boole
 fun TopHalf(
     modifier: Modifier = Modifier,
     navController: NavController,
-    slideImage: Array<Int>,
-    imageText: Array<String>,
+    topHalfItems: List<TopHalfItem>,
     changeImage: KSuspendFunction2<PagerState, Boolean, Unit>
 ) {
 
@@ -326,79 +339,81 @@ fun TopHalf(
         initialPage = 0,
         initialPageOffsetFraction = 0f
     ) {
-        4
+        topHalfItems.size
     }
 
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
     ) {
-        HorizontalPager(state = pagerState, key = { slideImage[it] }) { index ->
-            Image(
-                painter = painterResource(id = slideImage[index]),
-                contentDescription = imageText[index],
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-        }
+        if (topHalfItems.isNotEmpty()) {
+            HorizontalPager(state = pagerState, key = { topHalfItems[it].imageUrl }) { index ->
+                GlideImage(
+                    model = topHalfItems[index].imageUrl,
+                    contentDescription = topHalfItems[index].toString(),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
 
-        FilledTonalIconButton(
-            onClick = { scope.launch { changeImage(pagerState, false) } },
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .alpha(0.6f)
-        ) {
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowLeft,
-                contentDescription = "Previous Image",
-                modifier = modifier.size(24.dp),
-            )
-        }
+            FilledTonalIconButton(
+                onClick = { scope.launch { changeImage(pagerState, false) } },
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .alpha(0.6f)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = "Previous Image",
+                    modifier = modifier.size(24.dp),
+                )
+            }
 
-        FilledTonalIconButton(
-            onClick = { scope.launch { changeImage(pagerState, true) } },
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .alpha(0.6f),
-        ) {
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowRight,
-                contentDescription = "Next Image",
-                modifier = modifier.size(24.dp),
-            )
-        }
+            FilledTonalIconButton(
+                onClick = { scope.launch { changeImage(pagerState, true) } },
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .alpha(0.6f),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "Next Image",
+                    modifier = modifier.size(24.dp),
+                )
+            }
 
-        OutlinedButton(
-            colors = ButtonDefaults.outlinedButtonColors(
-                containerColor = Color.Black.copy(0.6f)
-            ),
-            onClick = { navController.navigate(Routes.CBRScreen.route) },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .offset(y = (-60).dp),
-        ) {
+            OutlinedButton(
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.Black.copy(0.6f)
+                ),
+                onClick = { navController.navigate(Routes.CBRScreen.route) },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .offset(y = (-60).dp),
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(10.dp),
+                    text = "NEW COLLEGE PREDICTOR",
+                    fontFamily = rubikFamily,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    color = Color(0xFF81D5FC)
+                )
+            }
+
             Text(
                 modifier = Modifier
-                    .padding(10.dp),
-                text = "NEW COLLEGE PREDICTOR",
+                    .padding(10.dp)
+                    .align(Alignment.BottomEnd),
+                text = topHalfItems[pagerState.currentPage].name,
+                fontSize = 10.sp,
                 fontFamily = rubikFamily,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                color = Color(0xFF81D5FC)
+                fontWeight = FontWeight.Thin,
+                color = Color.White.copy(alpha = 0.8f)
             )
         }
-
-        Text(
-            modifier = Modifier
-                .padding(10.dp)
-                .align(Alignment.BottomEnd),
-            text = imageText[pagerState.currentPage],
-            fontSize = 10.sp,
-            fontFamily = rubikFamily,
-            fontWeight = FontWeight.Thin,
-            color = Color.White.copy(alpha = 0.8f)
-        )
     }
 }
 
