@@ -3,10 +3,12 @@ package com.bera.josaahelpertool.di
 import android.content.Context
 import com.bera.josaahelpertool.network.CutoffApi
 import com.bera.josaahelpertool.network.QuotesApi
+import com.bera.josaahelpertool.network.UnsplashApi
 import com.bera.josaahelpertool.network.connectivity.ConnectivityObserver
 import com.bera.josaahelpertool.network.okhttp.CacheInterceptor
 import com.bera.josaahelpertool.network.okhttp.ForceCacheInterceptor
 import com.bera.josaahelpertool.repository.CutoffRepository
+import com.bera.josaahelpertool.repository.UniversityImageRepository
 import com.bera.josaahelpertool.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -27,6 +29,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideCutoffRepository(api: CutoffApi) = CutoffRepository(api)
+
+    @Singleton
+    @Provides
+    fun provideUniversityImageRepository(api: UnsplashApi) = UniversityImageRepository(api)
 
     @Singleton
     @Provides
@@ -54,6 +60,16 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(QuotesApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUnsplashApi(): UnsplashApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL_UNSPLASH)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(UnsplashApi::class.java)
     }
 
     @Singleton

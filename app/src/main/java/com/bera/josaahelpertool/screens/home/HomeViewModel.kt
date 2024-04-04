@@ -9,17 +9,25 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bera.josaahelpertool.R
+import com.bera.josaahelpertool.models.ui.TopHalfItem
 import com.bera.josaahelpertool.use_cases.GetQuotesUseCase
+import com.bera.josaahelpertool.use_cases.GetUniversityImagesUseCase
 import com.bera.josaahelpertool.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @OptIn(ExperimentalFoundationApi::class)
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getQuotesUseCase: GetQuotesUseCase
+    private val getQuotesUseCase: GetQuotesUseCase,
+    private val getUniversityImagesUseCase: GetUniversityImagesUseCase
 ) : ViewModel() {
 
     val drawableIds =
@@ -29,14 +37,8 @@ class HomeViewModel @Inject constructor(
             R.drawable.img_6,
             R.drawable.img_1
         )
-
-    val slideImage =
-        arrayOf(
-            R.drawable.ogc,
-            R.drawable.iit,
-            R.drawable.nit,
-            R.drawable.iitbombay
-        )
+    private val _slideImages = MutableStateFlow<List<TopHalfItem>>(emptyList())
+    val slideImages get() = _slideImages.asStateFlow()
 
     data class Link(
         val link: String,
@@ -73,6 +75,16 @@ class HomeViewModel @Inject constructor(
         "NIT Rourkela",
         "IIT Bombay"
     )
+
+    private fun fetchUniversityCampusImages() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val allImages = getUniversityImagesUseCase.getAllImages()
+
+                _slideImages.value = allImages
+            }
+        }
+    }
 
     suspend fun changeImagePage(pagerState: PagerState, next: Boolean) {
         pagerState
@@ -116,5 +128,9 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    init {
+        fetchUniversityCampusImages()
     }
 }
