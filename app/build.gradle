@@ -26,6 +26,7 @@ android {
 
         buildConfigField "String", "API_KEY_QUOTES", "\"${properties.getProperty("API_KEY_QUOTES") ?: System.getenv("API_KEY_QUOTES")}\""
         buildConfigField "String", "API_KEY_CUTOFF", "\"${properties.getProperty("API_KEY_CUTOFF") ?: System.getenv("API_KEY_CUTOFF")}\""
+        buildConfigField "String", "API_KEY_UNSPLASH", "\"${properties.getProperty("API_KEY_UNSPLASH") ?: System.getenv("API_KEY_UNSPLASH")}\""
     }
 
     buildTypes {

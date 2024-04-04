@@ -9,7 +9,7 @@ object Constants {
     const val BASE_URL_UNSPLASH = "https://api.unsplash.com/"
     const val API_KEY_CUTOFF = BuildConfig.API_KEY_CUTOFF
     const val API_KEY_QUOTES = BuildConfig.API_KEY_QUOTES
-    const val API_KEY_UNSPLASH = "6nlmANUApAAm_Kqer-xedtHQ61JRnzuZD3AmBaHhjoQ"
+    const val API_KEY_UNSPLASH = BuildConfig.API_KEY_UNSPLASH
 
     const val IIT_STRING = "Indian Institute of Technology"
     const val IIT_STRING_1 = "Indian Institute  of Technology"
